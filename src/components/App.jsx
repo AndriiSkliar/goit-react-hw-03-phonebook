@@ -16,6 +16,22 @@ export class App extends Component {
     filter: "",
   }
 
+  componentDidMount() {
+    const LS_KEY = "my_contacts"
+    const stringifiedContacts = localStorage.getItem(LS_KEY);
+    const parsedContacts = JSON.parse(stringifiedContacts) ?? this.state.contacts;
+
+    this.setState({ contacts: parsedContacts });
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      const LS_KEY = "my_contacts"
+      const stringifiedContacts = JSON.stringify(this.state.contacts)
+      localStorage.setItem(LS_KEY, stringifiedContacts)
+    }
+  }
+
   formSubmitHandler = (data) => {
     const hasDuplicates = this.state.contacts.some(
       contact => contact.name === data.name
