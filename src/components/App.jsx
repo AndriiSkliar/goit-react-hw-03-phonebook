@@ -28,11 +28,12 @@ export class App extends Component {
     if (prevState.contacts !== this.state.contacts) {
       const LS_KEY = "my_contacts"
       const stringifiedContacts = JSON.stringify(this.state.contacts)
+
       localStorage.setItem(LS_KEY, stringifiedContacts)
     }
   }
 
-  formSubmitHandler = (data) => {
+  formSubmitHandler = data => {
     const hasDuplicates = this.state.contacts.some(
       contact => contact.name === data.name
     );
